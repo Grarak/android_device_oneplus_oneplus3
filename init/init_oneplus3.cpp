@@ -88,6 +88,22 @@ void init_alarm_boot_properties()
     }
 }
 
+void load_op3(const char *model) {
+    property_set("ro.product.model", model);
+    property_set("ro.build.product", "OnePlus3");
+    property_set("ro.product.device", "OnePlus3");
+    property_set("ro.build.description", "OnePlus3-user 6.0.1 MMB29M 24 dev-keys");
+    property_set("ro.build.fingerprint", "OnePlus/OnePlus3/OnePlus3:6.0.1/MMB29M/362280:user/release-keys");
+}
+
+void load_op3t(const char *model) {
+    property_set("ro.product.model", model);
+    property_set("ro.build.product", "OnePlus3");
+    property_set("ro.product.device", "OnePlus3T");
+    property_set("ro.build.description", "OnePlus3-user 6.0.1 MXB48T 100 dev-keys");
+    property_set("ro.build.fingerprint", "OnePlus/OnePlus3/OnePlus3T:6.0.1/MXB48T/213712:user/release-keys");
+}
+
 void vendor_load_properties() {
     char device[PROP_VALUE_MAX];
     char rf_version[PROP_VALUE_MAX];
@@ -99,13 +115,18 @@ void vendor_load_properties() {
 
     property_get("ro.boot.rf_version", rf_version, NULL);
 
-    if (strstr(rf_version, "11") || strstr(rf_version, "12")
-            || strstr(rf_version, "31") || strstr(rf_version, "32")) {
+    if (strstr(rf_version, "11") || strstr(rf_version, "31")) {
         /* Chinese/America */
-        property_set("ro.product.model", "ONEPLUS A3000");
-    } else if (strstr(rf_version, "21") || strstr(rf_version, "22")) {
+        load_op3("ONEPLUS A3000");
+    } else if (strstr(rf_version, "21")) {
         /* Asia/Europe */
-        property_set("ro.product.model", "ONEPLUS A3003");
+        load_op3("ONEPLUS A3003");
+    } else if (strstr(rf_version, "12") || strstr(rf_version, "32")) {
+        /* Chinese/America */
+        load_op3t("ONEPLUS A3000");
+    } else if (strstr(rf_version, "22")) {
+        /* Asia/Europe */
+        load_op3t("ONEPLUS A3003");
     }
 
     init_alarm_boot_properties();
