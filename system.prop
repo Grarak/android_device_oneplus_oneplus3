@@ -141,3 +141,6 @@ persist.timed.enable=true
 
 # Wifi
 wifi.interface=wlan0
+
+# Custom update url
+cm.updater.uri=http://vps355909.ovh.net/api.json
